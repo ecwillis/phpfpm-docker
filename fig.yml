@@ -1,0 +1,17 @@
+web:
+    build: .
+    command: /sbin/my_init
+    ports:
+        - "80:80"
+    links:
+        - db
+        - redis
+    volumes:
+        - ./www:/var/www:rw
+redis:
+    image: redis
+db:
+    image: mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: 87hserk1aw5hajgdfg
+        MYSQL_DATABASE: farquod
