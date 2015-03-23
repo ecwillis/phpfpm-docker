@@ -17,6 +17,8 @@ RUN apt-get install -y --force-yes php5-cli php5-fpm php5-mysql php5-pgsql php5-
 
 RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/fpm/php.ini
 RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/fpm/php.ini
+## RUN sed -i "s/display_errors = Off/display_errors = On/" /etc/php5/fpm/php.ini
+RUN sed -i "s/display_startup_errors = Off/display_startup_errors = On/" /etc/php5/fpm/php.ini
 
 RUN apt-get install -y nginx
 
@@ -34,10 +36,12 @@ RUN mkdir           /etc/service/phpfpm
 ADD build/phpfpm.sh /etc/service/phpfpm/run
 RUN chmod +x        /etc/service/phpfpm/run
 
-EXPOSE 80
-# End Nginx-PHP
 
+# End Nginx-PHP
 RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
+
+EXPOSE 80
+EXPOSE 443
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

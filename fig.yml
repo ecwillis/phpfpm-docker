@@ -10,6 +10,8 @@ web:
         - ./www:/var/www:rw
 redis:
     image: redis
+    ports:
+        - "6379:6379"
 db:
     image: mysql
     ports:
